@@ -1,13 +1,15 @@
-AI Care Navigator – Backend API
-Overview
+# AI Care Navigator – Backend API
+
+### Overview
 
 The AI Care Navigator Backend is a FastAPI-based REST API that powers the AI Care Navigator application.
 It provides endpoints for member search, member profiles, care gaps, authorizations, and an AI-powered assistant.
 
 At this stage, the backend uses in-memory mock data to mirror the frontend data model.
+
 This allows rapid prototyping, API contract validation, and full frontend–backend integration before introducing a database.
 
-Tech Stack
+### Tech Stack
 
 FastAPI – Backend framework
 
