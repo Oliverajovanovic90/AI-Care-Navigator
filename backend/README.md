@@ -1,6 +1,6 @@
 # AI Care Navigator – Backend API
 
-### Overview
+## Overview
 
 The AI Care Navigator Backend is a FastAPI-based REST API that powers the AI Care Navigator application.
 It provides endpoints for member search, member profiles, care gaps, authorizations, and an AI-powered assistant.
@@ -9,7 +9,7 @@ At this stage, the backend uses in-memory mock data to mirror the frontend data 
 
 This allows rapid prototyping, API contract validation, and full frontend–backend integration before introducing a database.
 
-### Tech Stack
+## Tech Stack
 
 FastAPI – Backend framework
 
@@ -21,7 +21,8 @@ Python 3.12
 
 Modular router architecture (members, authorizations, ai)
 
-Project Structure
+## Project Structure
+```
 backend/
 ├── app/
 │   ├── main.py                # FastAPI app entry point
@@ -37,21 +38,23 @@ backend/
 ├── .venv/                     # Python virtual environment
 └── README.md
 
-API Endpoints
-Health Check
-GET /health
+```
 
+## API Endpoints
+Health Check:
+GET /health
 
 Response:
 
 { "status": "ok" }
 
-Members
+Members:
+
 Search Members
+
 GET /members
 
-
-Query Parameters:
+### Query Parameters:
 
 memberId (optional)
 
@@ -60,29 +63,34 @@ name (optional)
 Examples:
 
 /members
+
 /members?memberId=MBR-001
+
 /members?name=John
 
-Get Member Profile
-GET /members/{member_id}
+Get Member Profile:
 
+GET /members/{member_id}
 
 Example:
 
 /members/MBR-001
 
-Get Member Care Gaps
+Get Member Care Gaps:
+
 GET /members/{member_id}/care-gaps
 
-Get Member Authorizations
+Get Member Authorizations:
+
 GET /members/{member_id}/authorizations
 
-AI Assistant
+AI Assistant:
+
 Query AI Assistant
+
 POST /ai/query
 
-
-Request body:
+#### Request body:
 
 {
   "query": "Why was this authorization denied?",
@@ -97,6 +105,7 @@ Response:
 
 {
   "response": "Explanation of denial...",
+  
   "sources": ["Policy Section 6.1.3"]
 }
 
@@ -104,28 +113,33 @@ Response:
 The AI endpoint currently uses rule-based logic and backend data.
 It will later be upgraded to a tool-based AI agent backed by a database and MCP.
 
-Running the Backend Locally
+### Running the Backend Locally
+
 1. Create and activate virtual environment
+
 python -m venv .venv
+
 source .venv/bin/activate
 
 2. Install dependencies
+   
 pip install fastapi uvicorn
 
 3. Run the API
+   
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 
-The API will be available at:
+#### The API will be available at:
 
 http://localhost:8000
 
 
-Interactive OpenAPI docs:
+#### Interactive OpenAPI docs:
 
 http://localhost:8000/docs
 
-Current Limitations
+#### Current Limitations
 
 Uses in-memory mock data
 
@@ -149,12 +163,13 @@ Docker Compose deployment
 
 Integration tests and CI/CD
 
-Status
+#### Status
 
 ✅ Frontend–backend integration complete
-✅ API contract validated
-🚧 Database and AI agent coming next
 
+✅ API contract validated
+
+```
 backend/
 ├── app/
 │   ├── api/
@@ -177,4 +192,4 @@ backend/
 │   └── db/
 │       └── database.py
 
-
+```
