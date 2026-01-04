@@ -1,57 +1,71 @@
-AI Care Navigator
+# AI Care Navigator
 
-An AI-powered care coordination & prior-authorization assistant for healthcare teams
+AI-powered care coordination & prior-authorization assistant for healthcare teams.
+AI Care Navigator is a full-stack, cloud-deployed backend system designed to help healthcare analysts and care managers understand member data, care gaps, and authorization decisions using AI-assisted reasoning, structured APIs, and modern system architecture.
+This project demonstrates AI-assisted system design, tool-based reasoning (MCP), backend engineering, integration testing, CI/CD, and cloud deployment.
 
-📌 Overview
+### Problem Description
 
-AI Care Navigator is a full-stack, AI-assisted healthcare application designed to help care managers, analysts, and coordinators:
+Healthcare teams (case managers, analysts, care coordinators) often struggle with:
 
-Understand member status and risk
+Understanding member risk and care gaps
 
-Interpret authorization decisions
+Interpreting authorization decisions (approved vs denied)
 
-Identify and prioritize care gaps
+Navigating complex medical policies
 
-Receive AI-generated explanations and next-step recommendations
-
-The system combines a production-ready backend, AI reasoning, Model Context Protocol (MCP), containerized infrastructure, and automated testing and CI to demonstrate modern AI-driven system design.
-
-❓ Problem Statement
-
-Healthcare teams face significant challenges when working with fragmented systems:
-
-Member data spread across tools
-
-Authorization denials that are difficult to interpret
-
-Manual review of policies and guidelines
-
-Time-consuming documentation and note writing
+Writing clear summaries and next-step recommendations
 
 This leads to:
 
+Manual effort
+
 Delays in care
 
-Increased administrative burden
-
-Errors and inconsistencies
+Errors and inconsistent decisions
 
 Poor member experience
 
-🎯 Goal
+### Goal
 
 Build an AI-powered system that:
 
-Centralizes member, care gap, and authorization data
+Exposes clean APIs for member data
 
-Explains authorization outcomes in plain language
+Explains authorization outcomes
 
-Recommends next actions
+Summarizes care gaps
 
-Demonstrates real-world AI orchestration using tools (not just prompts)
+Demonstrates modern AI orchestration using tools (MCP + agents)
 
-🏗️ System Architecture
-High-Level Architecture
+### High-Level System Overview
+
+User Flow
+
+Search for a member
+
+View demographics, care gaps, and authorizations
+
+Ask AI questions such as:
+
+“Why was this authorization denied?”
+
+“What actions should I take next?”
+
+System Responsibilities
+
+Backend provides structured data and AI endpoints
+
+AI reasoning is handled via tool-based orchestration (MCP)
+
+Integration tests validate real workflows
+
+CI/CD automates validation
+
+Backend is deployed to the cloud
+
+## Architecture Overview
+
 ┌──────────────────┐
 │   Frontend UI    │
 │ (React / Next.js)│
@@ -70,19 +84,8 @@ High-Level Architecture
 │ (Managed / Local)│
 └──────────────────┘
 
-Key Design Principles
+## Project Folder Structure:
 
-Clear API contracts (OpenAPI)
-
-Separation of concerns
-
-Tool-based AI reasoning
-
-Production-style deployment
-
-Testability and reproducibility
-
-Project Folder Structure:
 AI-Care-Navigator/
 ├── .github/
 │   └── workflows/
@@ -144,41 +147,37 @@ AI-Care-Navigator/
 
 
 
-🎨 Frontend
-Purpose
+## Frontend
+Purpose:
 
 The frontend provides an intuitive interface for healthcare users to interact with member data and AI explanations.
 
-Planned / Optional Scope
+Tech:
 
-The frontend is optional for deployment and grading but included in the architecture for completeness.
+React / TypeScript
 
-Technology Stack
+Centralized API client
 
-React or Next.js
+Component-based structure
 
-TypeScript
+AI Tooling
 
-Centralized API client (api.ts)
+Lovable was used to assist with:
 
-Component-based UI
+UI scaffolding
 
-Core Screens
+Component layout ideas
 
-Member Search
+Frontend structure suggestions
 
-Member Profile
+The frontend demonstrates how a real care management UI would consume the backend APIs.
 
-Authorization Details
+## Backend (FastAPI)
+#### Overview
 
-AI Assistant Chat
+The backend is a production-oriented FastAPI application that exposes:
 
-⚙️ Backend (FastAPI)
-Overview
-
-The backend is a modular, production-oriented FastAPI application that serves as the system of record for:
-
-Members
+Member search & profiles
 
 Care gaps
 
@@ -186,23 +185,28 @@ Authorizations
 
 AI-powered explanations
 
-It is designed to support both direct API usage and AI agent tool access via MCP.
+Persistent AI audit logs
 
-Tech Stack
+It is designed to support AI agents and MCP-based orchestration.
 
-Python 3.12
+#### Tech Stack:
 
 FastAPI
 
 Pydantic
 
-Uvicorn
+SQLAlchemy (async)
 
 PostgreSQL
 
-OpenAPI / Swagger
+Uvicorn
 
-Backend Structure
+Python 3.12
+
+Docker
+
+## Backend Structure
+
 backend/
 ├── app/
 │   ├── main.py
@@ -219,7 +223,7 @@ backend/
 ├── Dockerfile
 └── README.md
 
-API Endpoints
+## API Endpoints
 Health
 GET /health
 
@@ -251,10 +255,9 @@ Swagger UI: /docs
 
 ReDoc: /redoc
 
-Screenshots are included under docs/ for peer review clarity.
+## Database Layer
 
-🗄️ Database Layer
-Tables
+Tables:
 
 members
 
@@ -264,26 +267,22 @@ authorizations
 
 ai_interactions (audit trail)
 
-Databases
+### Databases
 
 SQLite (local development)
 
 PostgreSQL (Docker & production)
 
-🧩 Model Context Protocol (MCP)
-Why MCP?
+## Model Context Protocol (MCP)
+MCP is used to:
 
-MCP is used to expose backend capabilities as explicit, typed AI tools, enabling:
+Expose backend capabilities as typed AI tools
 
-Safe AI-tool interaction
+Decouple AI reasoning from business logic
 
-Multi-step reasoning
+Enable multi-step workflows (search → retrieve → explain)
 
-Decoupling AI logic from business logic
-
-Real-world AI system architecture
-
-MCP Tools
+### MCP Tools
 
 search_members
 
@@ -295,7 +294,7 @@ get_member_authorizations
 
 query_ai
 
-MCP Workflow
+### MCP Workflow
 
 User asks a question
 
@@ -305,101 +304,124 @@ MCP server executes backend actions
 
 Agent synthesizes final response
 
-🤖 AI Agent
-Purpose
+## AI Agent
+Purpose:
 
-The AI agent demonstrates:
+A standalone AI agent consumes MCP tools to perform reasoning workflows.
 
-Tool discovery
+#### Agent Capabilities
 
-Multi-step reasoning
+Discovers MCP tools dynamically
 
-AI orchestration over real backend data
+Calls backend tools via MCP
 
-Design
+Orchestrates multi-step reasoning
 
-Uses FastMCP client
+Persists AI interactions
 
-Consumes MCP tools dynamically
-
-Executes workflows without hardcoded backend logic
-
-Example Workflow
+#### Example Workflow
 
 Search member
 
-Fetch care gaps
+Fetch authorizations
 
-Retrieve authorizations
+Identify denial
 
-Ask AI to explain a denial
+Ask AI to explain
 
-Persist AI interaction
+Store response in DB
 
-Running MCP & Agent Locally
-# MCP Server
+The agent is for development, experimentation, and demonstration, not production deployment.
+
+### AI-Assisted Development (Transparency)
+
+This project was explicitly built with AI assistance:
+
+ChatGPT was used to:
+
+Design architecture
+
+Debug Docker, MCP, and agent integration
+
+Create tests and CI workflows
+
+Improve documentation
+
+Lovable was used to assist frontend design and structure
+
+This aligns with modern AI-assisted engineering workflows and is intentionally documented.
+
+### MCP Server
 cd mcp
 python server.py
 
-# Agent
+### Agent
 cd agent
 python agent.py
 
-🧪 Testing Strategy
+## Testing Strategy
 Philosophy
 
 Tests validate real system behavior (no mocks).
 
-Test Types
-Type	Coverage
-Integration	Backend + DB
-AI	AI reasoning endpoints
-Infrastructure	Dockerized services
-Test Structure
+#### Tests cover:
+
+API correctness
+
+Database interaction
+
+AI reasoning output
+
+Persistence of AI queries
+
+#### Test Structure
 tests/
 ├── test_members.sh
 ├── test_ai.sh
 └── notebooks/
     └── agent_experiments.ipynb
 
-Running Tests
+### Running Tests
 docker compose up -d
 ./tests/test_members.sh
 ./tests/test_ai.sh
 
-🐳 Containerization
+## Containerization
 
-Dockerized backend
+Docker is used for:
 
-Docker Compose for local orchestration
+Backend service
 
-PostgreSQL container
+PostgreSQL database
 
+#### Local run:
 docker compose up --build
 
-🚀 Deployment
-Platform
+## Deployment
+Platform: Render
 
-Render
+Deployed Component: Backend API only
 
 Docker-based deployment
 
 Managed PostgreSQL
 
-Public URL
+#### Public URL
 https://ai-care-navigator.onrender.com
 
 
 Free tier instances may spin down after inactivity.
 
-Deployment Architecture
+#### Deployment Architecture:
+
 Client
   │ HTTPS
 FastAPI Backend (Docker)
   │ Private Network
 PostgreSQL (Render Managed)
 
-🔄 CI/CD
+
+## CI/CD
 
 GitHub Actions
 
@@ -409,7 +431,8 @@ Validates backend, database, and AI endpoints
 
 Prevents broken deployments
 
-🔁 Reproducibility
+
+## Reproducibility
 
 This project can be run end-to-end using:
 
@@ -421,9 +444,121 @@ GitHub Actions
 
 Render
 
-All steps are documented in this README.
+## How to Run This Project
 
-✅ Summary
+#### Clone the Repository
+
+git clone https://github.com/Oliverajovanovic90/AI-Care-Navigator.git
+
+cd AI-Care-Navigator
+
+#### Prerequisites
+
+Ensure the following are installed:
+
+Docker (v20+)
+
+Docker Compose
+
+Git
+
+curl (for test scripts)
+
+No local Python installation is required if using Docker.
+
+#### Start the System (Backend + Database)
+
+From the project root:
+
+cd infra
+docker compose up -d
+
+
+This will start:
+
+FastAPI backend (http://localhost:8000)
+
+PostgreSQL database
+
+#### Verify backend health:
+
+curl http://localhost:8000/health
+
+
+Expected response:
+
+{ "status": "ok" }
+
+#### View API Documentation
+
+Open your browser:
+
+Swagger UI
+👉 http://localhost:8000/docs
+
+ReDoc
+👉 http://localhost:8000/redoc
+
+These pages show the full OpenAPI contract used by the frontend and AI systems.
+
+#### Run Integration Tests (Required for Grading)
+
+From the project root:
+
+./tests/test_members.sh
+
+./tests/test_ai.sh
+
+These tests validate:
+
+Member search and profiles
+
+Care gaps and authorizations
+
+AI explanations
+
+Database persistence
+
+End-to-end workflows (no mocks)
+
+##### Expected output ends with:
+
+All tests passed successfully!
+
+#### Run MCP Server (Development Only)
+
+The MCP server is not required to run the application, but can be started for exploration:
+
+cd mcp
+
+python server.py
+
+#### Run AI Agent (Development Only)
+
+The standalone agent demonstrates MCP-based reasoning:
+
+cd agent
+
+python agent.py
+
+The agent will:
+
+Discover MCP tools
+
+Search members
+
+Explain authorization denials
+
+Persist AI responses
+
+#### Cloud Deployment (No Local Setup Needed)
+
+The backend is already deployed on Render:
+
+ https://ai-care-navigator.onrender.com
+
+
+### Summary
 
 This project demonstrates:
 
