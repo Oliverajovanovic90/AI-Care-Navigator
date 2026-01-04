@@ -44,23 +44,23 @@ backend/
 Health Check:
 GET /health
 
-Response:
+#### Response:
 
 { "status": "ok" }
 
-Members:
+#### Members:
 
 Search Members
 
 GET /members
 
-### Query Parameters:
+## Query Parameters:
 
 memberId (optional)
 
 name (optional)
 
-Examples:
+#### Examples:
 
 /members
 
@@ -68,29 +68,30 @@ Examples:
 
 /members?name=John
 
-Get Member Profile:
+#### Get Member Profile:
 
 GET /members/{member_id}
 
-Example:
+#### Example:
 
 /members/MBR-001
 
-Get Member Care Gaps:
+#### Get Member Care Gaps:
 
 GET /members/{member_id}/care-gaps
 
-Get Member Authorizations:
+#### Get Member Authorizations:
 
 GET /members/{member_id}/authorizations
 
-AI Assistant:
+#### AI Assistant:
 
 Query AI Assistant
 
 POST /ai/query
 
-#### Request body:
+
+### Request body:
 
 {
   "query": "Why was this authorization denied?",
@@ -101,7 +102,7 @@ POST /ai/query
 }
 
 
-Response:
+#### Response:
 
 {
   "response": "Explanation of denial...",
@@ -113,33 +114,34 @@ Response:
 The AI endpoint currently uses rule-based logic and backend data.
 It will later be upgraded to a tool-based AI agent backed by a database and MCP.
 
-### Running the Backend Locally
+## Running the Backend Locally
 
-1. Create and activate virtual environment
+### 1. Create and activate virtual environment
 
 python -m venv .venv
 
 source .venv/bin/activate
 
-2. Install dependencies
+### 2. Install dependencies
    
 pip install fastapi uvicorn
 
-3. Run the API
+### 3. Run the API
    
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 
-#### The API will be available at:
+### The API will be available at:
 
 http://localhost:8000
 
 
-#### Interactive OpenAPI docs:
+### Interactive OpenAPI docs:
 
 http://localhost:8000/docs
 
-#### Current Limitations
+
+### Current Limitations
 
 Uses in-memory mock data
 
@@ -163,12 +165,14 @@ Docker Compose deployment
 
 Integration tests and CI/CD
 
-#### Status
+
+### Status:
 
 ✅ Frontend–backend integration complete
 
 ✅ API contract validated
 
+## Project structure:
 ```
 backend/
 ├── app/
