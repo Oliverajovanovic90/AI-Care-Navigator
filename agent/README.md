@@ -13,7 +13,7 @@ Tool Response
 
 # Run Order:
 
-# Terminal 1 - Backend
+## Terminal 1 - Backend
 
 cd backend
 
