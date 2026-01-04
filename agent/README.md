@@ -1,5 +1,5 @@
 # Architecture
-
+```
 Agent (agent.py)
    |
    |  MCP client call
@@ -9,24 +9,36 @@ MCP Server (mcp/server.py)
    |  tool()
    v
 Tool Response
+```
 
-## Run Order
-Backend
+# Run Order:
+
+# Terminal 1 - Backend
+
 cd backend
+
 source .venv/bin/activate
+
 uvicorn app.main:app --reload --port 8000
 
-Terminal 2 — MCP server
+## Terminal 2 - MCP server
+
 cd mcp
+
 source .venv/bin/activate
+
 python server.py
 
-Terminal 3 — Agent
+## Terminal 3 - Agent
+
 cd agent
+
 source ../mcp/.venv/bin/activate
+
 python agent.py
 
-Output:
+## Output:
+
 Agent called MCP tool search_members
 
 MCP forwarded request to FastAPI backend
