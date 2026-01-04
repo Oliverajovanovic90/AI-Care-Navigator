@@ -1,0 +1,58 @@
+# version: "3.9"
+
+#services:
+  #db:
+    #image: postgres:16
+    #container_name: ai-care-navigator-db
+    #environment:
+      #POSTGRES_DB: ai_care_navigator
+      #POSTGRES_USER: app_user
+      #POSTGRES_PASSWORD: app_password
+    #ports:
+      #- "5432:5432"
+    #volumes:
+      #- ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+     # - postgres_data:/var/lib/postgresql/data
+
+#volumes:
+  #postgres_data:
+
+
+services:
+  db:
+    image: postgres:16
+    container_name: ai-care-navigator-db
+    environment:
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_password
+      POSTGRES_DB: ai_care_navigator
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ../backend
+    container_name: ai-care-navigator-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_password
+      POSTGRES_DB: ai_care_navigator
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
+
