@@ -153,6 +153,8 @@ AI-Care-Navigator/
 
 The frontend provides an intuitive interface for healthcare users to interact with member data and AI explanations.
 
+Frontend was created using Lovable.
+
 #### Tech:
 
 React / TypeScript
@@ -190,6 +192,8 @@ AI-powered explanations
 Persistent AI audit logs
 
 It is designed to support AI agents and MCP-based orchestration.
+
+Used ChatGpt to assist with backend development.
 
 ### Tech Stack:
 
